@@ -3,63 +3,58 @@ import { CourseData } from "../../types";
 import Style from "./CoursesRouter.module.css";
 import { Modal, Card, Text, Input, Button, Loading } from "@nextui-org/react";
 import { BsFillPlusCircleFill } from "react-icons/bs";
-import React, {useState} from "react"
-import {useRouter} from "next/router"
-import {v4} from "uuid"
+import React, { useState } from "react";
+import { useRouter } from "next/router";
+import { v4 } from "uuid";
 
 interface Props {
   courses: CourseData[];
 }
 
 export default function CoursesRouter({ courses }: Props): JSX.Element {
+  const router = useRouter();
 
-  const router = useRouter()
-  
-  const [modalVisible, setModalVisible] = useState(false)
-  const [courseName, setCourseName] = useState("")
-  const [courseCode, setCourseCode] = useState("")
-  const [isLoading, setIsLoading] = useState<Boolean>(false) 
+  const [modalVisible, setModalVisible] = useState(false);
+  const [courseName, setCourseName] = useState("");
+  const [courseCode, setCourseCode] = useState("");
+  const [isLoading, setIsLoading] = useState<Boolean>(false);
 
-  function openModal(){
-    setModalVisible(true)
+  function openModal() {
+    setModalVisible(true);
   }
-  function closeModal(){
-    setModalVisible(false)
+  function closeModal() {
+    setModalVisible(false);
   }
-  
-  async function createNewCourse(){
-    setIsLoading(()=>true)
+
+  async function createNewCourse() {
+    setIsLoading(() => true);
     const body = {
-      atAGlance:JSON.stringify({data:["","",""]}),
-      courseCode:courseCode,
-      examDetails:null,
-      extraInfo:null,
-      name:courseName,
-      overview:null,
-      tag:null
-  } 
+      atAGlance: JSON.stringify({ data: ["", "", "", "", ""] }),
+      courseCode: courseCode,
+      examDetails: null,
+      extraInfo: null,
+      name: courseName,
+      overview: null,
+      tag: null,
+    };
 
-  const fetchString = `https://open-study-college-application.herokuapp.com/courses`
-  // const fetchString = `http://localhost:3000/courses`
-  await fetch(fetchString,{
-      method: 'POST',
+    const fetchString = `https://open-study-college-application.herokuapp.com/courses`;
+    // const fetchString = `http://localhost:3000/courses`
+    await fetch(fetchString, {
+      method: "POST",
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
-      
-      body: JSON.stringify(body)
-     
-    })
 
-    setIsLoading(()=>false)
+      body: JSON.stringify(body),
+    });
 
-    router.push(`/courses/${courseCode}`)
-    
+    setIsLoading(() => false);
 
-
+    router.push(`/courses/${courseCode}`);
   }
-  
+
   return (
     <div className={Style.container}>
       {courses.map(courseData => {
@@ -68,39 +63,42 @@ export default function CoursesRouter({ courses }: Props): JSX.Element {
       })}
 
       <div className={Style.plusButton}>
-        <Card isPressable isHoverable variant="bordered"
-        onClick={openModal}>
+        <Card isPressable isHoverable variant="bordered" onClick={openModal}>
           <h1>
             <BsFillPlusCircleFill />
           </h1>
         </Card>
       </div>
 
-      <Modal closeButton
-      open={modalVisible}
-      onClose={closeModal}
-      >
+      <Modal closeButton open={modalVisible} onClose={closeModal}>
         <Modal.Header>
           <Text>Create New Course</Text>
-          </Modal.Header>
+        </Modal.Header>
 
-          <Modal.Body>
-          <Input clearable label="Course Name" placeholder="Course Name"
-          onChange={(e)=>{setCourseName(e.target.value)}}
+        <Modal.Body>
+          <Input
+            clearable
+            label="Course Name"
+            placeholder="Course Name"
+            onChange={e => {
+              setCourseName(e.target.value);
+            }}
           />
-          <Input clearable label="Course Code" placeholder="Course Code" 
-          onChange={(e)=>{setCourseCode(e.target.value)}}
+          <Input
+            clearable
+            label="Course Code"
+            placeholder="Course Code"
+            onChange={e => {
+              setCourseCode(e.target.value);
+            }}
           />
-          </Modal.Body>
-          <Modal.Footer>
-            <Button color={"gradient"}
-           
-            onClick={createNewCourse}
-            >Submit and go to data entry</Button>
-          </Modal.Footer>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button color={"gradient"} onClick={createNewCourse}>
+            Submit and go to data entry
+          </Button>
+        </Modal.Footer>
       </Modal>
-
-
     </div>
   );
 }
