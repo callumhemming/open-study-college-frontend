@@ -1,6 +1,7 @@
 import Style from "./Banner.module.css"
 import {Button} from "@nextui-org/react"
 import Link from "next/link"
+import React from 'react'
 
 interface Props{
     children:JSX.Element
