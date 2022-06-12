@@ -12,7 +12,9 @@ interface Props extends CourseData{
     qandas: QandA[];
     courseid:number;
     tag:string;
-    ataglance:string[];
+    ataglance:{
+        data:string[]
+    };
     overview:string[];
     extrainfo: string[];
     examdetails: string; 
@@ -72,20 +74,26 @@ export default function CoursesEditPage({data}:any): JSX.Element{
         color="gradient"
         size="md"
 
-        onClick={()=>{
+        onClick={async ()=>{
 
-            const body = {changeList:changeStack}
+            const body = {
+                changeList: changeStack
+            } 
 
-            // const fetchString = `https://open-study-college-application.herokuapp.com/courses/${coursecode}`
-            const fetchString = `http://localhost:3000/courses/${coursecode}`
-            fetch(fetchString,{
+            const fetchString = `https://open-study-college-application.herokuapp.com/courses/${coursecode}`
+            // const fetchString = `http://localhost:3000/courses/${coursecode}`
+            await fetch(fetchString,{
                 method: 'PUT',
                 headers: {
                   'Accept': 'application/json',
                   'Content-Type': 'application/json'
                 },
+                
                 body: JSON.stringify(body)
+               
               })
+              console.log(body)
+              setChangeStack([])
         }}
         >
             Save Changes

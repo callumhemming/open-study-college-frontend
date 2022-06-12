@@ -16,11 +16,11 @@ const[Tag, setTag] = useState(tag)
 
   useEffect(()=>{
 
-    if (renderCount.current === 0){return}
+    
 
     addChangeToStack({newData:Tag, column:"tag"})
 
-    renderCount.current++
+    
 
   },[Tag])
 

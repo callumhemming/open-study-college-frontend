@@ -1,12 +1,14 @@
 
 
 /**
-  * @param userID
-  * @param totalCost
+  * @param userid
+  * @param totalcost
+  * @param shoppingcartid
   */
 export interface Cart{
-    userID:string;
-    totalCost: number;
+    userid:string;
+    totalcost: number;
+    shoppingcartid:number
 }
 
 
@@ -27,7 +29,7 @@ export interface Cart{
   */
 export interface User{
     name:string;
-    userID:string
+    userid:string
 }
 
 
@@ -41,7 +43,9 @@ export interface CourseData{
     coursecode:string;
     name:string;
     tag?:string;
-    ataglance?:string[];
+    ataglance?:{
+        data:string[]
+    };
     overview?:string[];
     extrainfo?: string[];
     examdetails?: string; 

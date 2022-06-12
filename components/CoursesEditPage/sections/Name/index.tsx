@@ -15,10 +15,10 @@ const[Name, setName] = useState(name)
   const renderCount = useRef(0)
 
   useEffect(()=>{
-    if (renderCount.current === 0){return}
+    
     addChangeToStack({newData:Name, column:"name"})
 
-    renderCount.current++
+    
   },[Name])
 
   return (

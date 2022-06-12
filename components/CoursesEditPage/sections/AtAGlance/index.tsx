@@ -1,10 +1,11 @@
-import React, { useState,useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Typography } from "antd";
 import { render } from "react-dom";
 
-
 interface Params {
-  ataglance: string[];
+  ataglance:{
+    data:string[]
+};
   addChangeToStack: any;
 }
 
@@ -12,17 +13,16 @@ export default function AtAGlance({
   ataglance,
   addChangeToStack,
 }: Params): JSX.Element {
-  const [atAGlance, setAtAGlance] = useState(ataglance);
+  const [atAGlance, setAtAGlance] = useState(ataglance.data);
   const { Paragraph } = Typography;
-  const renderCount = useRef(0)
+  const renderCount = useRef(0);
 
-  useEffect(()=>{
-    if (renderCount.current === 0){return}
-
-    addChangeToStack({newData:JSON.stringify(atAGlance), column:"ataglance"})
-    renderCount.current++
-
-  },[atAGlance])
+  useEffect(() => {
+    addChangeToStack({
+      newData: JSON.stringify({data:atAGlance}),
+      column: "ataglance",
+    });
+  }, [atAGlance]);
 
   return (
     <>
@@ -32,8 +32,12 @@ export default function AtAGlance({
           <Paragraph
             editable={{
               tooltip: "click to edit text",
-              onChange: (e) => {
-                setAtAGlance([...atAGlance.slice(0,index), e, ...atAGlance.slice(index+1)  ])
+              onChange: e => {
+                setAtAGlance([
+                  ...atAGlance.slice(0, index),
+                  e,
+                  ...atAGlance.slice(index + 1),
+                ]);
               },
             }}
           >

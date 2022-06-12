@@ -9,7 +9,9 @@ import {CourseData, QandA} from "../../types"
         qandas: QandA[];
         courseid:number;
         tag:string;
-        ataglance:string[];
+        ataglance:{
+            data:string[]
+        };
         overview:string[];
         extrainfo: string[];
         examdetails: string; 
