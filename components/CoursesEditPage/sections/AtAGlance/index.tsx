@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Typography } from "antd";
 import { render } from "react-dom";
+import {v4} from "uuid"
 
 interface Params {
   ataglance:{
@@ -30,6 +31,7 @@ export default function AtAGlance({
       {atAGlance.map((atAGlanceItem, index) => {
         return (
           <Paragraph
+          key={v4()}
             editable={{
               tooltip: "click to edit text",
               onChange: e => {
