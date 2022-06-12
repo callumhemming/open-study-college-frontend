@@ -5,6 +5,7 @@ import { Modal, Card, Text, Input, Button, Loading } from "@nextui-org/react";
 import { BsFillPlusCircleFill } from "react-icons/bs";
 import React, {useState} from "react"
 import {useRouter} from "next/router"
+import {v4} from "uuid"
 
 interface Props {
   courses: CourseData[];
@@ -63,7 +64,7 @@ export default function CoursesRouter({ courses }: Props): JSX.Element {
     <div className={Style.container}>
       {courses.map(courseData => {
         const { name, coursecode } = courseData;
-        return <CourseCard name={name} coursecode={coursecode} />;
+        return <CourseCard key={v4()} name={name} coursecode={coursecode} />;
       })}
 
       <div className={Style.plusButton}>
