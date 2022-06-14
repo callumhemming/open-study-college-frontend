@@ -6,6 +6,7 @@ import { BsFillPlusCircleFill } from "react-icons/bs";
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { v4 } from "uuid";
+import {message} from "antd"
 
 interface Props {
   courses: CourseData[];
@@ -27,6 +28,10 @@ export default function CoursesRouter({ courses }: Props): JSX.Element {
   }
 
   async function createNewCourse() {
+    if(courseCode === ""){
+      message.error("CourseCode cannot be blank")
+      return
+    }
     setIsLoading(() => true);
     const body = {
       atAGlance: JSON.stringify({ data: ["", "", "", "", ""] }),
